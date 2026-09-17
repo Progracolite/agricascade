@@ -1,4 +1,4 @@
-# AgriCascade 9.29
+# AgriCascade
 
 **Intervention-sensitive agricultural cascade simulator.**
 
