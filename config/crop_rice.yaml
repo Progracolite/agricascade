@@ -1,0 +1,50 @@
+# Rice crop configuration.
+#
+# SCIENTIFIC STATUS: stage boundaries and water sensitivities are documented
+# prototype assumptions for rice, centralised here and never hard-coded in the
+# simulation. Sensitivity increases the yield-risk response to water stress.
+crop:
+  name: rice
+  display_name: Rice
+  season_length_days: 120
+  rooting_depth_mm: 400
+
+  stages:
+    establishment:
+      start_day: 0
+      water_sensitivity: 0.7
+    vegetative:
+      start_day: 25
+      water_sensitivity: 0.5
+    flowering:
+      start_day: 60
+      water_sensitivity: 1.0
+    grain_filling:
+      start_day: 85
+      water_sensitivity: 0.9
+    maturity:
+      start_day: 105
+      water_sensitivity: 0.4
+
+regions:
+  # Representative Kerala rice-growing areas (not official field-level coverage).
+  - id: thrissur
+    name: Thrissur
+    lat: 10.5276
+    lon: 76.2144
+  - id: palakkad
+    name: Palakkad
+    lat: 10.7867
+    lon: 76.6548
+  - id: alappuzha
+    name: Alappuzha
+    lat: 9.4981
+    lon: 76.3388
+  - id: kuttanad
+    name: Kuttanad
+    lat: 9.5667
+    lon: 76.4167
+  - id: ernakulam
+    name: Ernakulam
+    lat: 9.9816
+    lon: 76.2999

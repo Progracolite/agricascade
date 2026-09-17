@@ -1,0 +1,120 @@
+# AgriCascade model configuration.
+#
+# SCIENTIFIC STATUS: every numeric value here is a documented prototype
+# modelling assumption unless explicitly marked otherwise. They are NOT
+# calibrated operational constants. They are centralised so the simulation is
+# reproducible and so assumptions are visible and adjustable in one place.
+
+simulation:
+  resolution: daily
+  horizon_days: 14
+  seed: 42
+  start_of_season_day: 60      # scenario starts around flowering for the killer demo
+  monte_carlo_trajectories: 1000
+
+soil_layers:
+  # Depth layers are MODEL STATES, not direct satellite measurements.
+  surface: { depth_mm: 200 }   # 0-20 cm
+  root:    { depth_mm: 400 }   # 20-60 cm
+  deep:    { depth_mm: 400 }   # 60-100 cm
+
+soil:
+  # Infiltration / redistribution fractions.
+  # Origin: simplified bucket ("tipping bucket") water-balance assumptions,
+  # chosen to be plausible for loam-to-clay paddy soils; to be calibrated
+  # against observed soil moisture where data permit.
+  infiltration_fraction: 0.75
+  root_transfer_fraction: 0.55
+  deep_drainage_fraction: 0.10
+  et_surface_fraction: 0.35
+  et_root_fraction: 0.55
+  et_deep_fraction: 0.10
+
+  # Volumetric water content limits (m3/m3).
+  residual_theta: 0.05
+  saturation_theta: 0.45
+  field_capacity_theta: 0.36
+  wilting_point_theta: 0.16
+  critical_theta: 0.28        # crop water stress begins below this theta_root
+
+  # Texture scaling: sandier soil -> lower field capacity.
+  texture_scaling: true
+  reference_sand_fraction: 0.45
+  field_capacity_sand_sensitivity: 0.30
+
+stress:
+  # Stress_w = clip((critical_theta - theta_root) / (critical_theta - wilting), 0, 1)
+  # Simplified simulation variable, NOT a universal physiological model.
+  drydown_days_for_decline: 2
+
+crop_health:
+  # H_t = w1*NDVI_norm + w2*NDMI_norm + w3*(1 - Stress_t). Simulation signal,
+  # NOT labelled "actual plant health".
+  weights:
+    ndvi: 0.40
+    ndmi: 0.30
+    inverse_stress: 0.30
+  ndvi_range: [0.10, 0.90]
+  ndmi_range: [-0.20, 0.50]
+  biomass_growth_rate: 0.045
+  biomass_senescence: 0.010
+
+irrigation:
+  max_daily_demand_mm: 8.0
+  reserve_total_mm: 120.0
+  reserve_recharge_fraction: 0.15   # rainfall-to-reserve recharge
+  reserve_start_fraction: 0.70
+  secondary_stress_reserve_threshold: 0.25
+
+nutrient:
+  start_proxy: 0.70
+  leaching_rainfall_threshold_mm: 25.0
+  leaching_rate: 0.02
+
+disease:
+  # Rice blast-like favourable conditions: humid + near-optimal temperature.
+  start_proxy: 0.15
+  humidity_weight: 0.40
+  temperature_optimum_c: 28.0
+  temperature_tolerance_c: 12.0
+  growth_rate: 0.06
+
+yield_risk:
+  # Yield risk emerges from accumulated crop-stage-weighted water stress.
+  cumulative_stress_scale: 8.0
+
+events:
+  rainfall_deficit_mm: 1.0
+  root_stress_threshold: 0.30
+  crop_stress_threshold: 0.40
+  irrigation_demand_threshold_mm: 2.0
+  reserve_depletion_threshold: 0.25
+  secondary_stress_threshold: 0.50
+  severe_stress_threshold: 0.75
+
+branches:
+  sensitivity_threshold: 0.25
+  min_day: 1
+  max_lookahead_days: 10
+  baseline_epsilon: 0.05
+
+monte_carlo:
+  trajectories: 1000
+  rainfall_multiplier_sigma: 0.15
+  et_multiplier_sigma: 0.10
+  initial_root_moisture_sigma: 0.02
+  sensitivity_sigma: 0.10
+  severe_stress_threshold: 0.60
+  recovery_stress_threshold: 0.25
+
+uncertainty:
+  default_state_sigma: 0.03
+
+cascade_magnitude:
+  # Weight w_i for CM = sum_t sum_i w_i * stress_i,t
+  weights:
+    crop_stress: 1.0
+    secondary_stress: 1.0
+    yield_risk: 1.0
+    nutrient_deficit: 0.3
+    disease_pressure: 0.3

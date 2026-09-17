@@ -1,0 +1,33 @@
+# Scenario registry.
+#
+# Each scenario file under scenarios/ defines a set of controlled disturbances.
+# This registry lists them so the UI and scripts can enumerate them without
+# hard-coding paths.
+
+defaults:
+  horizon_days: 14
+  seed: 42
+  start_of_season_day: 60
+
+scenarios:
+  - id: normal
+    file: normal.yaml
+    label: Normal
+  - id: rainfall_deficit
+    file: rainfall_deficit.yaml
+    label: Rainfall Deficit
+  - id: heatwave
+    file: heatwave.yaml
+    label: Heatwave
+  - id: irrigation_failure
+    file: irrigation_failure.yaml
+    label: Irrigation Failure
+  - id: heavy_rain
+    file: heavy_rain.yaml
+    label: Heavy Rain
+  - id: compound
+    file: compound.yaml
+    label: Compound
+  - id: monsoon_break
+    file: monsoon_break.yaml
+    label: Monsoon Break + Heat Stress (killer demo)

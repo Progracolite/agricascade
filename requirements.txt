@@ -1,0 +1,19 @@
+# AgriCascade 9.29 - core runtime dependencies (all free / open source)
+pandas
+numpy
+scipy
+scikit-learn
+networkx
+streamlit
+plotly
+requests
+pyyaml
+joblib
+pytest
+
+# Optional geospatial / raster stack (only needed for real Sentinel raster processing).
+# The MVP simulation and dashboard run without these installed.
+# xarray
+# rasterio
+# geopandas
+# shapely

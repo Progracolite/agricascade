@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agricascade"
+version = "9.29.0"
+description = "Intervention-sensitive agricultural cascade simulator"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+    "pandas",
+    "numpy",
+    "scipy",
+    "scikit-learn",
+    "networkx",
+    "streamlit",
+    "plotly",
+    "requests",
+    "pyyaml",
+    "joblib",
+]
+
+[project.optional-dependencies]
+geo = ["xarray", "rasterio", "geopandas", "shapely"]
+dev = ["pytest"]
+
+[tool.setuptools]
+packages = [
+    "agricascade",
+    "agricascade.schemas",
+    "agricascade.data",
+    "agricascade.features",
+    "agricascade.state",
+    "agricascade.physics",
+    "agricascade.forecasting",
+    "agricascade.cascade",
+    "agricascade.intervention",
+    "agricascade.evaluation",
+    "agricascade.utils",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

@@ -1,0 +1,33 @@
+# Intervention objective weights.
+#
+# SCIENTIFIC STATUS: prototype decision preferences, NOT scientifically
+# universal weights. Score = l1*DamageAvoided - l2*Cost - l3*ResourceUse
+# - l4*Disruption.
+objective:
+  damage_avoided: 1.0
+  intervention_cost: 0.3
+  resource_use: 0.2
+  disruption: 0.1
+
+# Normalisation scales so the heterogeneous terms are comparable.
+scales:
+  damage_avoided: 1.0        # already a fraction of baseline cascade magnitude
+  intervention_cost: 1.0     # cost is expressed in normalised units [0, ~1]
+  resource_use: 1.0          # fraction of irrigation reserve consumed
+  disruption: 1.0            # disruption_score in [0, 1]
+
+intervention:
+  # Candidate magnitudes (mm) and timing used by enumeration.
+  partial_irrigation_mm: 15.0
+  full_irrigation_mm: 30.0
+  delayed_irrigation_mm: 20.0
+  delay_days: 2
+  allocation_reserve_fraction: 0.15
+  application_days: 2
+  # Resource requirement is irrigation demand (mm) / reserve_total_mm, cost is
+  # a normalised operational cost proxy (assumed, not economic).
+  cost_per_mm: 0.02
+  disruption_partial: 0.15
+  disruption_full: 0.35
+  disruption_delay: 0.10
+  disruption_allocation: 0.05

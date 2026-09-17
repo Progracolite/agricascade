@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# Testing / tooling
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Data (raw downloads are reproducible via scripts/download_data.py)
+data/raw/*
+data/processed/*
+data/external/*
+data/synthetic/*
+!data/**/.gitkeep
+
+# Models (reproducible via scripts/train.py)
+models/*
+!models/.gitkeep
+
+# Reports (reproducible via scripts/run_benchmark.py)
+reports/*.csv
+reports/figures/*
+!reports/figures/.gitkeep
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
